@@ -9,7 +9,6 @@ TEST_CASE("3x3 Correct Heuristic Calculations") {
 
 // creating a grid from the 3x3maze.txt image
 Grid threeGrid = toGrid(3x3maze.txt); 
-
 Point startPoint;
 Point midPoint;
 Point endPoint;
@@ -19,7 +18,6 @@ endPoint.h_ = val2 // expected h value of endPoint
 
 // creating a vector of points with known heuristics
 vector<Point> knownHeuristics = {startPoint, midPoint, endPoint}; // example known heuristic value for startPoint
-
 
 // Calculate and compare heuristic values for each point
 for (const auto& point: knownHeuristics) {
@@ -36,5 +34,22 @@ for (const auto& point: knownHeuristics) {
 
 TEST_CASE("Straight Path with No Obstacles") {
     // testing on a straight path with no obstacles
-    REQUIRE findPath(emptyMaze, startPoint, endPoint) == straightPath;
+    Graph threeGraph = Graph(3x3maze.txt);
+    startPoint = threeGraph(0,0);
+    endPoint = threeGraph(2,0)
+    REQUIRE findPath(3x3Maze, startPoint, endPoint) == straightPath;
+}
+
+TEST_CASE("Diagonal Path with No Obstacles") { 
+    Graph threeGraph = Graph(3x3maze.txt);
+    startPoint = threeGraph(0,0);
+    endPoint = threeGraph(2,2)
+    REQUIRE findPath(3x3Maze, startPoint, endPoint) == diagonalPath;
+}
+
+TEST_CASE("Straight Path with Obstacles") {
+    Graph threeGraph = Graph(3x3maze.txt);
+    startPoint = threeGraph(0,0);
+    endPoint = threeGraph(0,2)
+    REQUIRE findPath(3x3Maze, startPoint, endPoint) == straightObstaclePath;
 }
