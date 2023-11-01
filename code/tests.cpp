@@ -24,7 +24,7 @@ for (const auto& point: knownHeuristics) {
 
     double expectedHeuristic = point.h_; //h_ is the heursitic value
     
-    double calculatedHeuristic = getHeuristic(testPoint, startPoint, endPoint);
+    double calculatedHeuristic = getHeuristic(startPoint, endPoint);
     
     // Check if the calculated heuristic matches the expected value
     REQUIRE(calculatedHeuristic == expectedHeuristic);
