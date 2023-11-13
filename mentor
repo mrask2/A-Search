@@ -3,6 +3,7 @@ Honestly, we did not accomplish much this week due to lack of prepartaion due to
 as well as midterms in other classes. We did not have any goals set for the week. 
 We plan to go over and reorganize the repo with the necessary changes to be made in the project proposal grade to fit the needs instructed by the standard template.
 Also, we will restructure the tests to the necessary requirements as listed in the grading of our proposal by adding another processed dataset, as well as edit the proposal to include relevant tests.
-In the proposal, we will include more details about dataset generation,  as well as generate tests for edge cases.
-We will work on implementing 
+In the proposal, we will include more details about dataset generation, as well as generate tests for edge cases.
+We will work on implementing the toGrid function by including relevant tests and creating a .cpp file for the code, cloning the reposotory onto our local machine. 
+
 We apologize for the lack of work, we will pick it up this week.
