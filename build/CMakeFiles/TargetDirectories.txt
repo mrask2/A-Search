@@ -1,0 +1,10 @@
+/workspaces/CS225/cs225git/A-Search/build/CMakeFiles/test.dir
+/workspaces/CS225/cs225git/A-Search/build/CMakeFiles/edit_cache.dir
+/workspaces/CS225/cs225git/A-Search/build/CMakeFiles/rebuild_cache.dir
+/workspaces/CS225/cs225git/A-Search/build/lib/CMakeFiles/lodepng.dir
+/workspaces/CS225/cs225git/A-Search/build/lib/CMakeFiles/cs225.dir
+/workspaces/CS225/cs225git/A-Search/build/lib/CMakeFiles/edit_cache.dir
+/workspaces/CS225/cs225git/A-Search/build/lib/CMakeFiles/rebuild_cache.dir
+/workspaces/CS225/cs225git/A-Search/build/src/CMakeFiles/src.dir
+/workspaces/CS225/cs225git/A-Search/build/src/CMakeFiles/edit_cache.dir
+/workspaces/CS225/cs225git/A-Search/build/src/CMakeFiles/rebuild_cache.dir
