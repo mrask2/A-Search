@@ -1,4 +1,6 @@
-
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch_test_macros.hpp>
+#include "togrid.h"
 
 TEST_CASE("6x3 Correct Shortest Path from top left to bottom left") {
 // 6x3maze is the grid of nodes created from the 6x3maze.txt dataset, where each 1 represents a passable node and each 0 represents an obstacle
