@@ -18,34 +18,35 @@ TEST_CASE("3x3 Correct Shortest Path from top left to bottom right", "[weight=10
     }
 }
 
-/*
 TEST_CASE("3x3 Correct Heuristic Calculations") {
 
     // creating a grid from the 3x3maze.txt image
-    Grid threeGrid = toGrid("3x3maze.txt"); 
-    Point startPoint;
-    Point midPoint;
-    Point endPoint;
-    startPoint.h_ = val0; //expected h value of startPoint
-    midPoint.h_  = val1;   //expected h value of midPoint
-    endPoint.h_ = val2; // expected h value of endPoint
+    Point startPoint(0, 0, 0, 25.4558); //expected h value of startPoint
+    Point midPoint(1, 1, 7, 12.7279); //expected h value of midPoint
+    Point endPoint(2, 2, 0, 0); // expected h value of endPoint
 
+    Grid threeGrid;
+    threeGrid.readFromFile("3x3maze.txt");
+    threeGrid.createPointMaze();
+    Point start = threeGrid(0,0);
+    Point end = threeGrid(2,2);
+    
     // creating a vector of points with known heuristics
     vector<Point> knownHeuristics = {startPoint, midPoint, endPoint}; // example known heuristic value for startPoint
 
     // Calculate and compare heuristic values for each point
     for (const auto& point: knownHeuristics) {
 
-        double expectedHeuristic = point.h_; //h_ is the heursitic value
+        double expectedHeuristic = point.getH(); //h_ is the heursitic value
         
-        double calculatedHeuristic = getHeuristic(startPoint, endPoint);
+        double calculatedHeuristic = threeGrid(point.getXY().first, point.getXY().second).getH();
         
         // Check if the calculated heuristic matches the expected value
-        REQUIRE(calculatedHeuristic == expectedHeuristic);
+        REQUIRE((calculatedHeuristic - expectedHeuristic) < 0.0001);
     }
 }
 
-
+/*
 TEST_CASE("Straight Path with No Obstacles") {
     // testing on a straight path with no obstacles
     Graph threeGraph = Graph("3x3maze.txt");
