@@ -2,15 +2,18 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include "point.h"
 
 class Grid {
     public:
     Grid(); // empty constructor
     void readFromFile(const std::string& filename); // constructs 2d array from file
-    
+    void createPointMaze();
+
     private:
         std::vector<std::vector<int>> maze_;
-        size_t rows;
+        std::vector<std::vector<Point>> pointmaze_;
+        size_t rows_;
         size_t columns;
         
 };
