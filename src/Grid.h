@@ -9,11 +9,13 @@ class Grid {
     Grid(); // empty constructor
     void readFromFile(const std::string& filename); // constructs 2d array from file
     void createPointMaze();
+   
+}
 
     private:
         std::vector<std::vector<int>> maze_;
         std::vector<std::vector<Point>> pointmaze_;
         size_t rows_;
-        size_t columns;
+        size_t columns_;
         
 };

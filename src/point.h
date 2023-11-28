@@ -18,6 +18,3 @@ class Point {
         double h_ = 0; // heuristic value
 };
 
-double getHeuristic(int x, int y, int goalX, int goalY) {
-    return std::sqrt(std::pow((goalX - x), 2) + std::pow((goalY - y), 2));
-}
