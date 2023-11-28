@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -10,8 +12,6 @@ class Grid {
     void readFromFile(const std::string& filename); // constructs 2d array from file
     void createPointMaze();
    
-}
-
     private:
         std::vector<std::vector<int>> maze_;
         std::vector<std::vector<Point>> pointmaze_;
