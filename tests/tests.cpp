@@ -1,3 +1,4 @@
+
 #define CATCH_CONFIG_MAIN
 
 #include <catch2/catch_test_macros.hpp>
@@ -10,7 +11,7 @@ TEST_CASE("6x3 Correct Shortest Path from top left to bottom left") {
     REQUIRE(findPath(6x3maze, pointA, pointB) == 6x3shortestPath);
 }
 
-TEST_CASE("3x3 Correct Heuristic Calculations") {
+   TEST_CASE("3x3 Correct Heuristic Calculations") {
 
     // creating a grid from the 3x3maze.txt image
     Grid threeGrid = toGrid("3x3maze.txt"); 
