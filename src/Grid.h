@@ -9,8 +9,7 @@ class Grid {
     Grid(); // empty constructor
     void readFromFile(const std::string& filename); // constructs 2d array from file
     void createPointMaze();
-   
-}
+    double getHeuristic(int x, int y, int goalX, int goalY);
 
     private:
         std::vector<std::vector<int>> maze_;
