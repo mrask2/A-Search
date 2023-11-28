@@ -6,7 +6,7 @@ What you plan to accomplish next week
 
 
 Dev Log 11/26: 
-Over break, we did not work on the porject much. However, we accomplished a lot when we got back to campus. We were able to accomplish 
+Over break, we did not work on the project much. However, we accomplished a lot when we got back to campus. We were able to accomplish 
 our goals.
 
 First off, we restructured the databases. Instead of the previous use of 1s and 0s to represent a grid, we now are using numbers 0-9,
