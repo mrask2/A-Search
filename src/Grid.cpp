@@ -1,6 +1,8 @@
 #include "Grid.h"
 
 #include <limits>
+#include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -32,8 +34,8 @@ void Grid::readFromFile(const string& filename) {
 
 void Grid::createPointMaze() {
     pointmaze_.resize(rows_, vector<Point>(columns_));
-    for (unsigned r = 0; r < rows_; r++) {
-        for (unsigned c = 0; c < columns_; c++) {
+    for (int r = 0; r < rows_; r++) {
+        for (int c = 0; c < columns_; c++) {
             pointmaze_[r][c] = Point(r, c, maze_[r][c], getHeuristic(r,c, rows_ - 1, columns_ - 1));
         }
     }
@@ -50,18 +52,13 @@ double Grid::getHeuristic(int x, int y, int goalX, int goalY) {
 vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
 
     // The set of discovered nodes that may need to be (re-)expanded.
-    // Initially, only the start node is known.
-    // This is usually implemented as a min-heap or priority queue rather than a hash-set.
     priority_queue<Point, vector<Point>, greater<Point>> openSet;
     openSet.push(start);
 
-    // For node n, cameFrom[n] is the node immediately preceding it on the cheapest path from the start
-    // to n currently known.
-    // unordered_map<Point, Point> cameFrom = {{start, start}};
-    // cameFrom ==== POINT.get/setCameFrom(POINT*);
+    // For node n, n.getCameFrom() is the Point* immediately preceding 
+    // it on the cheapest path from the start to n currently known.
 
-    // For node n, gScore[n] is the cost of the cheapest path from start to n currently known.
-    //map with default value of Infinity
+    // For node n, n.setG() is the cost of the cheapest path from start to n currently known.
     start.setG(0);
 
     // For node n, fScore[n] := gScore[n] + h(n). fScore[n] represents our current best guess as to
@@ -70,9 +67,9 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
 
     while (!openSet.empty()) {
         // This operation can occur in O(Log(N)) time if openSet is a min-heap or a priority queue
-        Point current = openSet.top(); // the node in openSet having the lowest fScore[] value
+        Point current = openSet.top(); // the node in openSet having the lowest f value
         if (current.positionEquals(goal)) {
-            return reconstruct_path(&current); /// TODO: this function
+            return reconstruct_path(&current); 
         }
         current.in_open_set = false;
         openSet.pop();
@@ -80,14 +77,12 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
         vector<Point> neighbors = getNeighbors(current);
 
         for (auto& neighbor : neighbors) { // the seven directions besides the one it came from
-            // d(current,neighbor) is the weight of the edge from current to neighbor
             // tentative_gScore is the distance from start to the neighbor through current
             double tentative_gScore = current.getG() + neighbor.getWeight();
             if (tentative_gScore < neighbor.getG()) {
                 // This path to neighbor is better than any previous one. Record it!
                 neighbor.setCameFrom(&current);
                 neighbor.setG(tentative_gScore);
-                // auto:: fScore[neighbor] = tentative_gScore + neighbor.getH();
                 if (!neighbor.in_open_set) {
                     openSet.push(neighbor);
                     neighbor.in_open_set = true;
@@ -106,6 +101,7 @@ vector<pair<int, int>> Grid::reconstruct_path(Point* current) {
         current = current->getCameFrom();
         total_path.push_back(current->getXY());
     }
+    std::reverse(total_path.begin(), total_path.end());
     return total_path;
 }
 

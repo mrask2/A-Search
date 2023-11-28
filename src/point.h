@@ -1,12 +1,15 @@
 #pragma once
 
+#include <utility>
+#include <limits>
+
 class Point {
     public:
         Point(); 
         Point(int x, int y, int weight, double h); 
         void setG(double g);
         void setXY(int x, int y) { x_ = x; y_ = y; }
-        pair<int,int> getXY() const { return make_pair(x_, y_); }
+        std::pair<int,int> getXY() const { return std::make_pair(x_, y_); }
 
         void setCameFrom(Point* cameFrom) { cameFrom_ = cameFrom; }
         Point* getCameFrom() const { return cameFrom_; }
