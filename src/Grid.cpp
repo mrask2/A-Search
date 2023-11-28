@@ -1,11 +1,4 @@
-#pragma once
-
 #include "Grid.h"
-#include <iostream>
-#include <fstream>
-#include <cmath>
-#include <string>
-#include <vector>
 
 Grid::Grid() {
     columns_  = 0;
