@@ -5,7 +5,7 @@
 class Point {
     public:
         Point(); 
-        Point(int weight_, double h); 
+        Point(int weight, double h); 
         void setG(double g); 
         int getWeight() const { return weight_; }
         double getF() const { return f_; }
