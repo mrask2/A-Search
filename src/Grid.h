@@ -21,6 +21,8 @@ class Grid {
         double getHeuristic(int x, int y, int goalX, int goalY);
         vector<pair<int,int>> solveMaze(Point start, Point goal);
 
+        Point& operator()(int x, int y) { return pointmaze_[x][y]; }
+
     private:
         vector<pair<int, int>> reconstruct_path(Point* current); 
         vector<Point> getNeighbors(Point current);
