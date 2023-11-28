@@ -1,16 +1,23 @@
 #pragma once
 
+#include <cmath>
+
 class Point {
     public:
         Point(); 
         Point(int weight_, double h); 
         void setG(double g); 
-        double getF();
-        double getG();
-        double getH();
+        int getWeight() const { return weight_; }
+        double getF() const { return f_; }
+        double getG() const { return g_; }
+        double getH() const { return h_; }
     private:
         int weight_ = 0; // weight of the node
         double f_ = 0; // total cost
         double g_ = 0; // cost to get to this point
         double h_ = 0; // heuristic value
 };
+
+double getHeuristic(int x, int y, int goalX, int goalY) {
+    return std::sqrt(std::pow((goalX - x), 2) + std::pow((goalY - y), 2));
+}
