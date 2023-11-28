@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Grid.h"
 
 Grid::Grid() {
