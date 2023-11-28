@@ -1,0 +1,27 @@
+What goals you had set for the week and whether they were accomplished or not
+What specific tasks each member of your team accomplished in the week
+What problems you encountered (if any) that prevented you from meeting your goals
+What you plan to accomplish next week
+
+
+
+Dev Log 11/26: 
+Over break, we did not work on the porject much. However, we accomplished a lot when we got back to campus. We were able to accomplish 
+our goals.
+
+First off, we restructured the databases. Instead of the previous use of 1s and 0s to represent a grid, we now are using numbers 0-9,
+where 0s represent the start and endpoints of the grid, and numbers 1-9 represent the weights of travelling to that point on the grid.
+We have generated new data using the same website we used before, but this time using the new grid format.
+
+
+Second of all, we have completed the Point class. Points represent each point on the grid. We have defined constructors, private member
+variables, and comparison operators for the Point class. We have also created getters and setter for their h,g, and f values, as well as created 
+a function to calculate the h value. We have also defined functions such as setCameFrom and getCameFrom in order to be able to retrace the path 
+created by the solveMaze function.
+    We have also created the grid class to represent the grid that the algorithm is traversing. This  class contains the main A*-Search function,
+    as well as taking in a file and creating a maze from it.
+
+
+Finally, we have restructured the test cases to fit our new format. We are currently running into a linker error, which I am not sure how to fix.
+Our goals for next week include fixing the linker error, debugging the functions, passing our created test cases, and possibly importing a map
+dataset so that we can run our algorithm on street data (our final goal).
