@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -13,7 +14,7 @@ class Grid {
     void createPointMaze();
 
     double getHeuristic(int x, int y, int goalX, int goalY);
-   
+    vector<std::pair<int,int>> solveMaze(Point start, Point goal, std::vector<std::vector<Point>> maze);
 
     private:
         std::vector<std::vector<int>> maze_;
