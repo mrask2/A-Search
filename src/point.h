@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cmath>
-
 class Point {
     public:
         Point(); 
