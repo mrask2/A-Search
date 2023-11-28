@@ -1,8 +1,8 @@
 #include "Grid.h"
 
 Grid::Grid() {
-    columns  = 0;
-    rows = 0;
+    columns_  = 0;
+    rows_ = 0;
 }
 
 void Grid::readFromFile(const std::string& filename) {
@@ -22,11 +22,22 @@ void Grid::readFromFile(const std::string& filename) {
             row.push_back(value);
         }
         maze_.push_back(row);
-        columns = row.size(); 
-        ++rows;
+        columns_ = row.size(); 
+        ++rows_;
     }
 }
 
-void
+void Grid::createPointMaze() {
+    pointmaze_.resize(rows_, std::vector<Point>(columns_));
+    for (unsigned r = 0; r < rows_; r++) {
+        for (unsigned c = 0; c < columns_; c++) {
+            pointmaze_[r][c] = Point(maze_[r][c], getHeuristic(r,c, rows_ - 1, columns_ - 1));
+        }
+    }
+}
 
+
+ double Grid::getHeuristic(int x, int y, int goalX, int goalY) {
+    return std::sqrt(std::pow((goalX - x), 2) + std::pow((goalY - y), 2));
+ }
 
