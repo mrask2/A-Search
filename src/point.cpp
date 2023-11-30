@@ -2,9 +2,9 @@
 
 Point::Point() {}
 
-Point::Point(int x, int y, int weight, double h) : x_(x), y_(y), weight_(weight), h_(h) {}
+Point::Point(int x, int y, int weight, int h) : x_(x), y_(y), weight_(weight), h_(h) {}
 
-void Point::setG(double g) {
+void Point::setG(int g) {
     g_ = g;
     f_ = g_ + h_;
 }

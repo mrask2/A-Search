@@ -42,14 +42,16 @@ void Grid::createPointMaze() {
 }
 
 
-double Grid::getHeuristic(int x, int y, int goalX, int goalY) {
-    return std::sqrt(std::pow((goalX - x), 2) + std::pow((goalY - y), 2));
+int Grid::getHeuristic(int x, int y, int goalX, int goalY) {
+    return std::abs(goalX - x + goalY - y);
 }
 
 
 // A* finds a path from start to goal.
 // h is the heuristic function. h(n) estimates the cost to reach goal from node n.
 vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
+    // Derived from pseudocode found at
+    // https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
 
     // The set of discovered nodes that may need to be (re-)expanded.
     priority_queue<Point, vector<Point>, greater<Point>> openSet;
@@ -71,7 +73,7 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
         if (current.positionEquals(goal)) {
             return reconstruct_path(&current); 
         }
-        current.in_open_set = false;
+        current.searched = true;
         openSet.pop();
 
         vector<Point> neighbors = getNeighbors(current);
@@ -83,15 +85,14 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
                 // This path to neighbor is better than any previous one. Record it!
                 neighbor.setCameFrom(&current);
                 neighbor.setG(tentative_gScore);
-                if (!neighbor.in_open_set) {
+                if (!neighbor.searched) {
                     openSet.push(neighbor);
-                    neighbor.in_open_set = true;
                 }
             }
         }
     }
-    // Open set is empty but goal was never reached // should never happen...
-    throw std::runtime_error("No path found");
+    // Open set is empty but goal was never reached
+    return vector<pair<int, int>>();
 }
 
 vector<pair<int, int>> Grid::reconstruct_path(Point* current) {
@@ -109,7 +110,6 @@ vector<Point> Grid::getNeighbors(Point current) {
     vector<Point> neighbors;
     std::pair<int, int> directions[] = {
         {-1, 0}, {1, 0}, {0, -1}, {0, 1},  // Horizontal and vertical neighbors
-        {-1, -1}, {-1, 1}, {1, -1}, {1, 1} // Diagonal neighbors
     };
 
     std::pair<int, int> currentXY = current.getXY();
@@ -119,8 +119,12 @@ vector<Point> Grid::getNeighbors(Point current) {
 
         // Check if the new position is within the maze bounds
         if (newX >= 0 && newX < rows_ && newY >= 0 && newY < columns_) {
-            if (current.getCameFrom() != nullptr && newX == current.getCameFrom()->getXY().first && newY == current.getCameFrom()->getXY().second) {
+            Point* cameFrom = current.getCameFrom();
+            if (cameFrom != nullptr && newX == cameFrom->getXY().first && newY == cameFrom->getXY().second) {
                 continue; // Don't go back to the node we came from
+            }
+            if (maze_[newX][newY] != 1) {
+                continue; // Don't go to a wall
             }
             neighbors.push_back(pointmaze_[newX][newY]);
         }

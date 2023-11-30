@@ -6,8 +6,8 @@
 class Point {
     public:
         Point(); 
-        Point(int x, int y, int weight, double h); 
-        void setG(double g);
+        Point(int x, int y, int weight, int h); 
+        void setG(int g);
         void setXY(int x, int y) { x_ = x; y_ = y; }
         std::pair<int,int> getXY() const { return std::make_pair(x_, y_); }
 
@@ -15,9 +15,9 @@ class Point {
         Point* getCameFrom() const { return cameFrom_; }
 
         int getWeight() const { return weight_; }
-        double getF() const { return f_; }
-        double getG() const { return g_; }
-        double getH() const { return h_; }
+        int getF() const { return f_; }
+        int getG() const { return g_; }
+        int getH() const { return h_; }
 
         bool operator<(const Point& rhs) const {
             return f_ < rhs.f_;
@@ -29,15 +29,15 @@ class Point {
             return x_ == rhs.x_ && y_ == rhs.y_;
         }
 
-        bool in_open_set = false;
+        bool searched = false;
 
     private:
         int x_ = 0;
         int y_ = 0;
         Point* cameFrom_ = nullptr;
         int weight_ = 0; // weight of the node
-        double f_ = 0; // total cost
-        double g_ = std::numeric_limits<double>::max(); // cost to get to this point
-        double h_ = 0; // heuristic value
+        int f_ = 0; // total cost
+        int g_ = std::numeric_limits<int>::max(); // cost to get to this point
+        int h_ = 0; // heuristic value
 };
 

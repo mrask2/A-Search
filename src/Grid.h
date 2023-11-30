@@ -18,7 +18,7 @@ class Grid {
         void readFromFile(const string& filename); // constructs 2d array from file
         void createPointMaze();
 
-        double getHeuristic(int x, int y, int goalX, int goalY);
+        int getHeuristic(int x, int y, int goalX, int goalY);
         vector<pair<int,int>> solveMaze(Point start, Point goal);
 
         Point& operator()(int x, int y) { return pointmaze_[x][y]; }
