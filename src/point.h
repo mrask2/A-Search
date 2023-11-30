@@ -37,7 +37,7 @@ class Point {
         Point* cameFrom_ = nullptr;
         int weight_ = 0; // weight of the node
         int f_ = 0; // total cost
-        int g_ = std::numeric_limits<int>::max(); // cost to get to this point
+        int g_ = std::numeric_limits<int>::max(); // length of smallest path to get to this point
         int h_ = 0; // heuristic value
 };
 
