@@ -11,7 +11,7 @@ Grid::Grid() {
     rows_ = 0;
 }
 
-void Grid::readFromFile(const string& filename) {
+void Grid::readFromFile(const string& filename, int rows, int columns) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
@@ -25,10 +25,17 @@ void Grid::readFromFile(const string& filename) {
         while (str >> value) {
             row.push_back(value);
         }
-
+        if ((int) row.size() != columns) {
+            std::cerr << "Error: row size does not match columns" << std::endl;
+            return;
+        }
         maze_.push_back(row);
         columns_ = row.size(); 
         ++rows_;
+    }
+    if (rows_ != rows) {
+        std::cerr << "Error: number of rows does not match rows" << std::endl;
+        return;
     }
 }
 
@@ -36,7 +43,8 @@ void Grid::createPointMaze() {
     pointmaze_.resize(rows_, vector<Point>(columns_));
     for (int r = 0; r < rows_; r++) {
         for (int c = 0; c < columns_; c++) {
-            pointmaze_[r][c] = Point(r, c, maze_[r][c], getHeuristic(r,c, rows_ - 1, columns_ - 1));
+            // If destination is not bottom right, needs to be changed
+            pointmaze_[r][c] = Point(r, c, maze_[r][c], getHeuristic(r,c, rows_ - 1, columns_ - 1)); 
         }
     }
 }
@@ -70,9 +78,13 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
     while (!openSet.empty()) {
         // This operation can occur in O(Log(N)) time if openSet is a min-heap or a priority queue
         Point current = openSet.top(); // the node in openSet having the lowest f value
+        if (current.searched) {
+            continue;
+        }
         if (current.positionEquals(goal)) {
             return reconstruct_path(&current); 
         }
+
         current.searched = true;
         openSet.pop();
 
@@ -83,7 +95,9 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
             double tentative_gScore = current.getG() + neighbor.getWeight();
             if (tentative_gScore < neighbor.getG()) {
                 // This path to neighbor is better than any previous one. Record it!
-                neighbor.setCameFrom(&current);
+                std::cout << "Current: " << current.getXY().first << ", " << current.getXY().second << std::endl;
+                std::cout << "Neighbor: " << neighbor.getXY().first << ", " << neighbor.getXY().second << std::endl;
+                neighbor.setCameFrom(&current); // doesnt set cameFrom right idk how
                 neighbor.setG(tentative_gScore);
                 if (!neighbor.searched) {
                     openSet.push(neighbor);
@@ -97,8 +111,11 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
 
 vector<pair<int, int>> Grid::reconstruct_path(Point* current) {
     vector<pair<int, int>> total_path;
+
     total_path.push_back(current->getXY());
+    
     while (current->getCameFrom() != nullptr) {
+        // std::cout << "Current RECONSTRUCT: " << current->getXY().first << ", " << current->getXY().second << std::endl;
         current = current->getCameFrom();
         total_path.push_back(current->getXY());
     }
@@ -125,6 +142,11 @@ vector<Point> Grid::getNeighbors(Point current) {
             }
             if (maze_[newX][newY] != 1) {
                 continue; // Don't go to a wall
+            }
+            if (cameFrom != nullptr) {
+                std::cout << "NewXY: \t" << newX << ", " << newY << std::endl;
+                std::cout << "CamFrm \t" << cameFrom->getXY().first << ", " << cameFrom->getXY().second << std::endl;
+                std::cout << "Curnt \t" << current.getXY().first << ", " << current.getXY().second << std::endl;
             }
             neighbors.push_back(pointmaze_[newX][newY]);
         }

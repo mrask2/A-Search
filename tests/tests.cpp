@@ -6,7 +6,7 @@ TEST_CASE("3x3 Correct Shortest Path from top left to bottom right", "[weight=10
     // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
     Grid threeGrid;
-    threeGrid.readFromFile("3x3maze.txt");
+    threeGrid.readFromFile("../data/3x3.txt", 3, 3);
     threeGrid.createPointMaze();
     Point start = threeGrid(0,0);
     Point end = threeGrid(2,2);
@@ -21,12 +21,12 @@ TEST_CASE("3x3 Correct Shortest Path from top left to bottom right", "[weight=10
 TEST_CASE("3x3 Correct Heuristic Calculations") {
 
     // creating a grid from the 3x3maze.txt image
-    Point startPoint(0, 0, 0, 25.4558); //expected h value of startPoint
-    Point midPoint(1, 1, 7, 12.7279); //expected h value of midPoint
+    Point startPoint(0, 0, 0, 25); //expected h value of startPoint
+    Point midPoint(1, 1, 7, 12); //expected h value of midPoint
     Point endPoint(2, 2, 0, 0); // expected h value of endPoint
 
     Grid threeGrid;
-    threeGrid.readFromFile("3x3maze.txt");
+    threeGrid.readFromFile("../data/3x3.txt", 3, 3);
     threeGrid.createPointMaze();
     Point start = threeGrid(0,0);
     Point end = threeGrid(2,2);
@@ -42,7 +42,7 @@ TEST_CASE("3x3 Correct Heuristic Calculations") {
         double calculatedHeuristic = threeGrid(point.getXY().first, point.getXY().second).getH();
         
         // Check if the calculated heuristic matches the expected value
-        REQUIRE((calculatedHeuristic - expectedHeuristic) < 0.0001);
+        REQUIRE(calculatedHeuristic == expectedHeuristic);
     }
 }
 

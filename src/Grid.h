@@ -15,7 +15,7 @@ using namespace std;
 class Grid {
     public:
         Grid(); // empty constructor
-        void readFromFile(const string& filename); // constructs 2d array from file
+        void readFromFile(const string& filename, int rows, int columns); // constructs 2d array from file
         void createPointMaze();
 
         int getHeuristic(int x, int y, int goalX, int goalY);
