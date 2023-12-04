@@ -38,7 +38,8 @@ void Grid::createPointMaze(int goalX, int goalY) {
     for (int r = 0; r < rows_; r++) {
         for (int c = 0; c < columns_; c++) {
             // If destination is not bottom right, needs to be changed
-            pointmaze_[r][c] = Point(r, c, maze_[r][c], getHeuristic(r,c, goalX, goalY)); 
+            Point pt = Point(r, c, maze_[r][c], getHeuristic(r,c, goalX, goalY)); 
+            pointmaze_[r][c] = pt;
         }
     }
 }

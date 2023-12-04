@@ -137,6 +137,7 @@ TEST_CASE("100x100 Correct Shortest Path from top left to bottom right", "[weigh
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
 
+    REQUIRE(solution.size() == shortestPath.size());
     for (size_t i = 0; i < solution.size(); i++) {
         REQUIRE(solution[i].first == shortestPath[i].first);
         REQUIRE(solution[i].second == shortestPath[i].second);
@@ -156,12 +157,14 @@ TEST_CASE("1000x1000 Correct Shortest Path from top left to bottom right", "[wei
 
 
     BFSgrid bfs;
-    bfs.readFromFile("../data/1000x1000.txt" , 0);
+    bfs.readFromFile("../data/1000x1000.txt", 0);
     bfs.createPointMaze();
     
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
 
+    REQUIRE(solution.size() == shortestPath.size());
+    std::cout << solution.size() << " RERRRERERE " << shortestPath.size() << std::endl;
     for (size_t i = 0; i < solution.size(); i++) {
         REQUIRE(solution[i].first == shortestPath[i].first);
         REQUIRE(solution[i].second == shortestPath[i].second);
