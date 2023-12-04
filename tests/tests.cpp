@@ -52,7 +52,7 @@ TEST_CASE("5x5 Correct Shortest Path from top left to bottom right", "[weight=10
     // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
     Grid fiveGrid;
-    fiveGrid.readFromFile("../data/3x3.txt", 5, 5);
+    fiveGrid.readFromFile("../data/5x5.txt", 5, 5);
     fiveGrid.createPointMaze();
     Point start = fiveGrid(0,0);
     Point end = fiveGrid(4,4);
