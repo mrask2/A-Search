@@ -134,10 +134,15 @@ TEST_CASE("100x100 Correct Shortest Path from top left to bottom right", "[weigh
     bfsHundredGrid.readFromFile("../data/100x100.txt" , 0);
     bfsHundredGrid.createPointMaze();
     
+    vector<pair<int,int>> solution = bfsHundredGrid.solveMaze(start, end);
+    vector<pair<int,int>> hundredShortestPath = hundredGrid.solveMaze(start, end);
     
+
 
     vector<pair<int,int>> solution = bfsHundredGrid.solveMaze(start, end);
     vector<pair<int,int>> hundredShortestPath = hundredGrid.solveMaze(start, end);
+
+
     for (size_t i = 0; i < solution.size(); i++) {
         REQUIRE(solution[i].first == hundredShortestPath[i].first);
         REQUIRE(solution[i].second == hundredShortestPath[i].second);

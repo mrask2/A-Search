@@ -72,6 +72,7 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
     while (!openSet.empty()) {
         // This operation can occur in O(Log(N)) time if openSet is a min-heap or a priority queue
         Point* current = openSet.top(); // the node in openSet having the lowest f value
+        openSet.pop();
         if (current->searched) {
             continue;
         }
@@ -80,13 +81,12 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
         }
 
         current->searched = true;
-        openSet.pop();
 
         vector<Point*> neighbors = getNeighbors(current);
 
-        for (auto& neighbor : neighbors) { // the seven directions besides the one it came from
+        for (auto& neighbor : neighbors) { // the cardinal directions besides the one it came from
             // tentative_gScore is the distance from start to the neighbor through current
-            double tentative_gScore = current->getG() + 1;
+            int tentative_gScore = current->getG() + 1;
             if (tentative_gScore < neighbor->getG()) {
                 // This path to neighbor is better than any previous one. Record it!
                 // std::cout << "Setting cameFrom for point " << neighbor->getXY().first << ", " << neighbor->getXY().second << " to " << current->getXY().first << ", " << current->getXY().second << std::endl;
