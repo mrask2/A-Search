@@ -11,7 +11,9 @@ BFSgrid::BFSgrid() {
     rows_ = 0;
 }
 
-void BFSgrid::readFromFile(const string& filename) {
+void BFSgrid::readFromFile(const string& filename, int wallValue) {
+    wallValue_ = wallValue;
+
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
@@ -103,7 +105,7 @@ vector<Point*> BFSgrid::getNeighbors(Point* current) {
             if (cameFrom != nullptr && newX == cameFrom->getXY().first && newY == cameFrom->getXY().second) {
                 continue; // Don't go back to the node we came from
             }
-            if (maze_[newX][newY] != 1) {
+            if (maze_[newX][newY] == wallValue_) {
                 continue; // Don't go to a wall
             }
             neighbors.push_back(&pointmaze_[newX][newY]);

@@ -15,7 +15,7 @@ using namespace std;
 class BFSgrid {
     public:
         BFSgrid(); // empty constructor
-        void readFromFile(const string& filename); // constructs 2d array from file
+        void readFromFile(const string& filename, int wallValue); // constructs 2d array from file
         void createPointMaze();
 
         vector<pair<int,int>> solveMaze(Point start, Point goal);
@@ -30,6 +30,7 @@ class BFSgrid {
         vector<vector<Point>> pointmaze_;
         int rows_;
         int columns_;
+        int wallValue_;
 
         vector<pair<int, int>> path_;
 };
