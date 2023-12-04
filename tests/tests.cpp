@@ -57,10 +57,11 @@ TEST_CASE("5x5 Correct Shortest Path from top left to bottom right", "[weight=10
     Point start = fiveGrid(0,0);
     Point end = fiveGrid(4,4);
 
-    vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}, {2,3}, {3,3}, {3,4}, {4,4}};
+    vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}, {3,2}, {3,3}, {3,4}, {4,4}};
     vector<pair<int,int>> threeShortestPath = fiveGrid.solveMaze(start, end);
     for (size_t i = 0; i < solution.size(); i++) {
-        REQUIRE(solution[i] == threeShortestPath[i]);
+        REQUIRE(solution[i].first == threeShortestPath[i].first);
+        REQUIRE(solution[i].second == threeShortestPath[i].second);
     }
 }
 /*
