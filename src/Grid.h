@@ -25,7 +25,7 @@ class Grid {
 
     private:
         vector<pair<int, int>> reconstruct_path(Point* current); 
-        vector<Point> getNeighbors(Point current);
+        vector<Point*> getNeighbors(Point* current);
 
         vector<vector<int>> maze_;
         vector<vector<Point>> pointmaze_;

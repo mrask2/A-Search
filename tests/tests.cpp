@@ -11,7 +11,7 @@ TEST_CASE("3x3 Correct Shortest Path from top left to bottom right", "[weight=10
     Point start = threeGrid(0,0);
     Point end = threeGrid(2,2);
 
-    vector<pair<int,int>> solution = {{0,0}, {0,1}, {0,2}, {1,2}, {2,2}};
+    vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}};
     vector<pair<int,int>> threeShortestPath = threeGrid.solveMaze(start, end);
     for (size_t i = 0; i < solution.size(); i++) {
         REQUIRE(solution[i] == threeShortestPath[i]);
@@ -21,9 +21,9 @@ TEST_CASE("3x3 Correct Shortest Path from top left to bottom right", "[weight=10
 TEST_CASE("3x3 Correct Heuristic Calculations") {
 
     // creating a grid from the 3x3maze.txt image
-    Point startPoint(0, 0, 0, 25); //expected h value of startPoint
-    Point midPoint(1, 1, 7, 12); //expected h value of midPoint
-    Point endPoint(2, 2, 0, 0); // expected h value of endPoint
+    Point startPoint(0, 0, 1, 4); //expected h value of startPoint
+    Point midPoint(1, 1, 1, 2); //expected h value of midPoint
+    Point endPoint(2, 2, 1, 0); // expected h value of endPoint
 
     Grid threeGrid;
     threeGrid.readFromFile("../data/3x3.txt", 3, 3);

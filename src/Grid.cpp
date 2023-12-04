@@ -62,8 +62,8 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
     // https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
 
     // The set of discovered nodes that may need to be (re-)expanded.
-    priority_queue<Point, vector<Point>, greater<Point>> openSet;
-    openSet.push(start);
+    priority_queue<Point*, vector<Point*>, greater<Point*>> openSet;
+    openSet.push(&start);
 
     // For node n, n.getCameFrom() is the Point* immediately preceding 
     // it on the cheapest path from the start to n currently known.
@@ -77,29 +77,28 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
 
     while (!openSet.empty()) {
         // This operation can occur in O(Log(N)) time if openSet is a min-heap or a priority queue
-        Point current = openSet.top(); // the node in openSet having the lowest f value
-        if (current.searched) {
+        Point* current = openSet.top(); // the node in openSet having the lowest f value
+        if (current->searched) {
             continue;
         }
-        if (current.positionEquals(goal)) {
-            return reconstruct_path(&current); 
+        if (current->positionEquals(goal)) {
+            return reconstruct_path(current); 
         }
 
-        current.searched = true;
+        current->searched = true;
         openSet.pop();
 
-        vector<Point> neighbors = getNeighbors(current);
+        vector<Point*> neighbors = getNeighbors(current);
 
         for (auto& neighbor : neighbors) { // the seven directions besides the one it came from
             // tentative_gScore is the distance from start to the neighbor through current
-            double tentative_gScore = current.getG() + neighbor.getWeight();
-            if (tentative_gScore < neighbor.getG()) {
+            double tentative_gScore = current->getG() + neighbor->getWeight();
+            if (tentative_gScore < neighbor->getG()) {
                 // This path to neighbor is better than any previous one. Record it!
-                std::cout << "Current: " << current.getXY().first << ", " << current.getXY().second << std::endl;
-                std::cout << "Neighbor: " << neighbor.getXY().first << ", " << neighbor.getXY().second << std::endl;
-                neighbor.setCameFrom(&current); // doesnt set cameFrom right idk how
-                neighbor.setG(tentative_gScore);
-                if (!neighbor.searched) {
+                // std::cout << "Setting cameFrom for point " << neighbor->getXY().first << ", " << neighbor->getXY().second << " to " << current->getXY().first << ", " << current->getXY().second << std::endl;
+                neighbor->setCameFrom(current); 
+                neighbor->setG(tentative_gScore);
+                if (!neighbor->searched) {
                     openSet.push(neighbor);
                 }
             }
@@ -115,7 +114,6 @@ vector<pair<int, int>> Grid::reconstruct_path(Point* current) {
     total_path.push_back(current->getXY());
     
     while (current->getCameFrom() != nullptr) {
-        // std::cout << "Current RECONSTRUCT: " << current->getXY().first << ", " << current->getXY().second << std::endl;
         current = current->getCameFrom();
         total_path.push_back(current->getXY());
     }
@@ -123,32 +121,32 @@ vector<pair<int, int>> Grid::reconstruct_path(Point* current) {
     return total_path;
 }
 
-vector<Point> Grid::getNeighbors(Point current) { 
-    vector<Point> neighbors;
+vector<Point*> Grid::getNeighbors(Point* current) { 
+    vector<Point*> neighbors;
     std::pair<int, int> directions[] = {
         {-1, 0}, {1, 0}, {0, -1}, {0, 1},  // Horizontal and vertical neighbors
     };
 
-    std::pair<int, int> currentXY = current.getXY();
+    std::pair<int, int> currentXY = current->getXY();
     for (const auto& dir : directions) {
         int newX = currentXY.first + dir.first;
         int newY = currentXY.second + dir.second;
 
         // Check if the new position is within the maze bounds
         if (newX >= 0 && newX < rows_ && newY >= 0 && newY < columns_) {
-            Point* cameFrom = current.getCameFrom();
+            Point* cameFrom = current->getCameFrom();
             if (cameFrom != nullptr && newX == cameFrom->getXY().first && newY == cameFrom->getXY().second) {
                 continue; // Don't go back to the node we came from
             }
             if (maze_[newX][newY] != 1) {
                 continue; // Don't go to a wall
             }
-            if (cameFrom != nullptr) {
-                std::cout << "NewXY: \t" << newX << ", " << newY << std::endl;
-                std::cout << "CamFrm \t" << cameFrom->getXY().first << ", " << cameFrom->getXY().second << std::endl;
-                std::cout << "Curnt \t" << current.getXY().first << ", " << current.getXY().second << std::endl;
-            }
-            neighbors.push_back(pointmaze_[newX][newY]);
+            // if (cameFrom != nullptr) {
+            //     std::cout << "NewXY: \t" << newX << ", " << newY << std::endl;
+            //     std::cout << "CamFrm \t" << cameFrom->getXY().first << ", " << cameFrom->getXY().second << std::endl;
+            //     std::cout << "Curnt \t" << current->getXY().first << ", " << current->getXY().second << std::endl;
+            // }
+            neighbors.push_back(&pointmaze_[newX][newY]);
         }
     }
     return neighbors;
