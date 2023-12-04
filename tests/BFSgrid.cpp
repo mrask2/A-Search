@@ -67,9 +67,7 @@ vector<std::pair<int,int>> BFSgrid::solveMaze(Point start, Point goal) {
             if (!neighbor->searched) {
                 neighbor->setCameFrom(current);
                 neighbor->searched = true;
-                if (!neighbor->searched) {
-                    q.push(neighbor);
-                }
+                q.push(neighbor);
             }
         }
     }
