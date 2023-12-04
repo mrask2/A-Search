@@ -11,7 +11,7 @@ TEST_CASE("3x3 Correct Shortest Path from top left to bottom right", "[weight=10
     Point start = threeGrid(0,0);
     Point end = threeGrid(2,2);
 
-    vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}}
+    vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}};
     vector<pair<int,int>> threeShortestPath = threeGrid.solveMaze(start, end);
     for (size_t i = 0; i < solution.size(); i++) {
         REQUIRE(solution[i] == threeShortestPath[i]);
@@ -52,7 +52,7 @@ TEST_CASE("5x5 Correct Shortest Path from top left to bottom right", "[weight=10
     // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
     Grid threeGrid;
-    threeGrid.readFromFile("../data/3x3.txt", 3, 3);
+    threeGrid.readFromFile("../data/5x5.txt", 5, 5);
     threeGrid.createPointMaze();
     Point start = threeGrid(0,0);
     Point end = threeGrid(4,4);
