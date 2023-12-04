@@ -123,32 +123,50 @@ TEST_CASE("100x100 Correct Shortest Path from top left to bottom right", "[weigh
     // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
     // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
-    Grid hundredGrid;
-    hundredGrid.readFromFile("../data/100x100.txt", 0);
-    hundredGrid.createPointMaze(99,99);
-    Point start = hundredGrid(0,0);
-    Point end = hundredGrid(99,99);
+    Grid aSearch;
+    aSearch.readFromFile("../data/100x100.txt", 0);
+    aSearch.createPointMaze(99,99);
+    Point start = aSearch(0,0);
+    Point end = aSearch(99,99);
 
 
-    BFSgrid bfsHundredGrid;
-    bfsHundredGrid.readFromFile("../data/100x100.txt" , 0);
-    bfsHundredGrid.createPointMaze();
+    BFSgrid bfs;
+    bfs.readFromFile("../data/100x100.txt" , 0);
+    bfs.createPointMaze();
     
-    vector<pair<int,int>> solution = bfsHundredGrid.solveMaze(start, end);
-    vector<pair<int,int>> hundredShortestPath = hundredGrid.solveMaze(start, end);
-    
-
-
-    vector<pair<int,int>> solution = bfsHundredGrid.solveMaze(start, end);
-    vector<pair<int,int>> hundredShortestPath = hundredGrid.solveMaze(start, end);
-
+    vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
 
     for (size_t i = 0; i < solution.size(); i++) {
-        REQUIRE(solution[i].first == hundredShortestPath[i].first);
-        REQUIRE(solution[i].second == hundredShortestPath[i].second);
+        REQUIRE(solution[i].first == shortestPath[i].first);
+        REQUIRE(solution[i].second == shortestPath[i].second);
     }
 }
 
+
+TEST_CASE("1000x1000 Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
+    // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
+    // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
+    // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
+    Grid aSearch;
+    aSearch.readFromFile("../data/1000x1000.txt", 0);
+    aSearch.createPointMaze(999,999);
+    Point start = aSearch(0,0);
+    Point end = aSearch(999,999);
+
+
+    BFSgrid bfs;
+    bfs.readFromFile("../data/1000x1000.txt" , 0);
+    bfs.createPointMaze();
+    
+    vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+
+    for (size_t i = 0; i < solution.size(); i++) {
+        REQUIRE(solution[i].first == shortestPath[i].first);
+        REQUIRE(solution[i].second == shortestPath[i].second);
+    }
+}
 
 /*
 TEST_CASE("Straight Path with No Obstacles") {
