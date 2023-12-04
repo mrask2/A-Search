@@ -11,7 +11,9 @@ Grid::Grid() {
     rows_ = 0;
 }
 
-void Grid::readFromFile(const string& filename, int rows, int columns) {
+void Grid::readFromFile(const string& filename, int wallValue) {
+    wallValue_ = wallValue;
+
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
@@ -25,26 +27,18 @@ void Grid::readFromFile(const string& filename, int rows, int columns) {
         while (str >> value) {
             row.push_back(value);
         }
-        if ((int) row.size() != columns) {
-            std::cerr << "Error: row size does not match columns" << std::endl;
-            return;
-        }
         maze_.push_back(row);
         columns_ = row.size(); 
         ++rows_;
     }
-    if (rows_ != rows) {
-        std::cerr << "Error: number of rows does not match rows" << std::endl;
-        return;
-    }
 }
 
-void Grid::createPointMaze() {
+void Grid::createPointMaze(int goalX, int goalY) {
     pointmaze_.resize(rows_, vector<Point>(columns_));
     for (int r = 0; r < rows_; r++) {
         for (int c = 0; c < columns_; c++) {
             // If destination is not bottom right, needs to be changed
-            pointmaze_[r][c] = Point(r, c, maze_[r][c], getHeuristic(r,c, rows_ - 1, columns_ - 1)); 
+            pointmaze_[r][c] = Point(r, c, maze_[r][c], getHeuristic(r,c, goalX, goalY)); 
         }
     }
 }
@@ -92,7 +86,7 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
 
         for (auto& neighbor : neighbors) { // the seven directions besides the one it came from
             // tentative_gScore is the distance from start to the neighbor through current
-            double tentative_gScore = current->getG() + neighbor->getWeight();
+            double tentative_gScore = current->getG() + 1;
             if (tentative_gScore < neighbor->getG()) {
                 // This path to neighbor is better than any previous one. Record it!
                 // std::cout << "Setting cameFrom for point " << neighbor->getXY().first << ", " << neighbor->getXY().second << " to " << current->getXY().first << ", " << current->getXY().second << std::endl;
@@ -138,14 +132,9 @@ vector<Point*> Grid::getNeighbors(Point* current) {
             if (cameFrom != nullptr && newX == cameFrom->getXY().first && newY == cameFrom->getXY().second) {
                 continue; // Don't go back to the node we came from
             }
-            if (maze_[newX][newY] != 1) {
+            if (maze_[newX][newY] == wallValue_) {
                 continue; // Don't go to a wall
             }
-            // if (cameFrom != nullptr) {
-            //     std::cout << "NewXY: \t" << newX << ", " << newY << std::endl;
-            //     std::cout << "CamFrm \t" << cameFrom->getXY().first << ", " << cameFrom->getXY().second << std::endl;
-            //     std::cout << "Curnt \t" << current->getXY().first << ", " << current->getXY().second << std::endl;
-            // }
             neighbors.push_back(&pointmaze_[newX][newY]);
         }
     }

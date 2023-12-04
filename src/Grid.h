@@ -15,8 +15,8 @@ using namespace std;
 class Grid {
     public:
         Grid(); // empty constructor
-        void readFromFile(const string& filename, int rows, int columns); // constructs 2d array from file
-        void createPointMaze();
+        void readFromFile(const string& filename, int wallValue); // constructs 2d array from file
+        void createPointMaze(int goalX, int goalY);
 
         int getHeuristic(int x, int y, int goalX, int goalY);
         vector<pair<int,int>> solveMaze(Point start, Point goal);
@@ -31,6 +31,7 @@ class Grid {
         vector<vector<Point>> pointmaze_;
         int rows_;
         int columns_;
+        int wallValue_;
 
         vector<pair<int, int>> path_;
 };
