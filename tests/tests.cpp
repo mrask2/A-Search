@@ -190,7 +190,7 @@ TEST_CASE("Sydney Correct Shortest Path from top left to bottom right", "[weight
 
 
     BFSgrid bfs;
-    //bfs.readFromCSV("../data/Sydney_0_1024.csv", 1);
+    bfs.readFromCSV("../data/Sydney_0_1024.csv", 1);
     bfs.createPointMaze();
     
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
@@ -216,7 +216,7 @@ TEST_CASE("Shanghai Correct Shortest Path from top left to bottom right", "[weig
 
 
     BFSgrid bfs;
-    //bfs.readFromCSV("../data/Shanghai_2_1024.csv", 1);
+    bfs.readFromCSV("../data/Shanghai_2_1024.csv", 1);
     bfs.createPointMaze();
     
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
