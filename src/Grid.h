@@ -17,6 +17,7 @@ class Grid {
     public:
         Grid(); // empty constructor
         void readFromFile(const string& filename, int wallValue); // constructs 2d array from file
+        void readFromCSV(const string& filename, int wallValue);
         void createPointMaze(int goalX, int goalY);
 
         int getHeuristic(int x, int y, int goalX, int goalY);

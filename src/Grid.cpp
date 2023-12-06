@@ -35,6 +35,30 @@ void Grid::readFromFile(const string& filename, int wallValue) {
     }
 }
 
+void Grid::readFromCSV(const string& filename, int wallValue) {
+    // read 0s and 1s from csv file
+    wallValue_ = wallValue;
+
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return;
+    }
+    string line;
+    while (std::getline(file, line)) {
+        std::stringstream str(line);
+        int value;
+        vector<int> row;
+        while (str >> value) {
+            row.push_back(value);
+            str.ignore(1, ',');
+        }
+        maze_.push_back(row);
+        columns_ = row.size(); 
+        ++rows_;
+    }
+}
+
 void Grid::createPointMaze(int goalX, int goalY) {
     pointmaze_.resize(rows_, vector<Point>(columns_));
     for (int r = 0; r < rows_; r++) {
