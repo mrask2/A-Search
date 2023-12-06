@@ -184,9 +184,9 @@ TEST_CASE("Sydney Correct Shortest Path from top left to bottom right", "[weight
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
     Grid aSearch;
     aSearch.readFromCSV("../data/Sydney_0_1024.csv", 1);
-    aSearch.createPointMaze(1024,1024);
+    aSearch.createPointMaze(1023,1023);
     Point start = aSearch(0,0);
-    Point end = aSearch(1024,1024);
+    Point end = aSearch(1023,1023);
 
 
     BFSgrid bfs;

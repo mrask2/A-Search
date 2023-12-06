@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <sstream>
 
+#include "../lib/cs225/HSLAPixel.h"
+
 using namespace std;
 
 BFSgrid::BFSgrid() {
@@ -28,6 +30,30 @@ void BFSgrid::readFromFile(const string& filename, int wallValue) {
             row.push_back(value);
         }
 
+        maze_.push_back(row);
+        columns_ = row.size(); 
+        ++rows_;
+    }
+}
+
+void BFSgrid::readFromCSV(const string& filename, int wallValue) {
+    // read 0s and 1s from csv file
+    wallValue_ = wallValue;
+
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return;
+    }
+    string line;
+    while (std::getline(file, line)) {
+        std::stringstream str(line);
+        int value;
+        vector<int> row;
+        while (str >> value) {
+            row.push_back(value);
+            str.ignore(1, ',');
+        }
         maze_.push_back(row);
         columns_ = row.size(); 
         ++rows_;
@@ -111,3 +137,29 @@ vector<Point*> BFSgrid::getNeighbors(Point* current) {
     }
     return neighbors;
 } 
+
+cs225::PNG BFSgrid::createPicture() {
+    picture_ = cs225::PNG(columns_, rows_);
+    cs225::HSLAPixel white(0, 0, 1, 1);
+    cs225::HSLAPixel black(0, 0, 0, 1);
+    for (int row = 0; row < rows_; row++) {
+        for (int col = 0; col < columns_; col++) {
+            if (maze_[row][col] == wallValue_) {
+                picture_.getPixel(col, row) = black;
+            } else {
+                picture_.getPixel(col, row) = white;
+            }
+        }
+    }
+    return picture_;
+}
+
+
+cs225::PNG BFSgrid::drawPath(const vector<pair<int,int>>& solutionPath) {
+    cs225::PNG copy = picture_;
+    cs225::HSLAPixel red(0, 1, 0.5, 1);
+    for (const pair<int,int>& tile : solutionPath) {
+        copy.getPixel(tile.second, tile.first) = red;
+    }
+    return copy;
+}
