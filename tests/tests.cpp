@@ -171,6 +171,61 @@ TEST_CASE("1000x1000 Correct Shortest Path from top left to bottom right", "[wei
     }
 }
 
+
+
+TEST_CASE("Sydney Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
+    // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
+    // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
+    // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
+    Grid aSearch;
+    aSearch.readFromFileCSV("../data/Sydney_0_1024.csv", 1);
+    aSearch.createPointMaze(1024,1024);
+    Point start = aSearch(0,0);
+    Point end = aSearch(1024,1024);
+
+
+    BFSgrid bfs;
+    bfs.readFromFileCSV("../data/Sydney_0_1024.csv", 1);
+    bfs.createPointMaze();
+    
+    vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+
+    REQUIRE(solution.size() == shortestPath.size());
+    for (size_t i = 0; i < solution.size(); i++) {
+        REQUIRE(solution[i].first == shortestPath[i].first);
+        REQUIRE(solution[i].second == shortestPath[i].second);
+    }
+}
+
+
+TEST_CASE("Shanghai Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
+    // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
+    // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
+    // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
+    Grid aSearch;
+    aSearch.readFromFileCSV("../data/Shanghai_2_1024.csv", 1);
+    aSearch.createPointMaze(1023,1023);
+    Point start = aSearch(0,0);
+    Point end = aSearch(1023,1023);
+
+
+    BFSgrid bfs;
+    bfs.readFromFileCSV("../data/Shanghai_2_1024.csv", 1);
+    bfs.createPointMaze();
+    
+    vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+
+    REQUIRE(solution.size() == shortestPath.size());
+    for (size_t i = 0; i < solution.size(); i++) {
+        REQUIRE(solution[i].first == shortestPath[i].first);
+        REQUIRE(solution[i].second == shortestPath[i].second);
+    }
+}
+
+
+
 /*
 TEST_CASE("Straight Path with No Obstacles") {
     // testing on a straight path with no obstacles

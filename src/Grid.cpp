@@ -182,6 +182,7 @@ cs225::PNG Grid::createPicture() {
             }
         }
     }
+    return picture_;
 }
 
 
@@ -190,4 +191,5 @@ cs225::PNG Grid::drawPath(const vector<pair<int,int>>& solutionPath) {
     for (const pair<int,int>& tile : solutionPath) {
         copy.getPixel(tile.second, tile.first);
     }
+    return copy;
 }
