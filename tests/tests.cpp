@@ -227,6 +227,22 @@ TEST_CASE("Shanghai Correct Shortest Path from top left to bottom right", "[weig
         REQUIRE(solution[i].first == shortestPath[i].first);
         REQUIRE(solution[i].second == shortestPath[i].second);
     }
+
+    cs225::PNG aPic = aSearch.createPicture();
+    cs225::PNG bfsPic = bfs.createPicture();
+
+
+    aPic.writeToFile("ASydneyTemp.png");
+    bfsPic.writeToFile("BFSSydneyTemp.png");
+    
+    cs225::PNG bfsPath = bfs.drawPath(solution);
+    cs225::PNG aPath = aSearch.drawPath(shortestPath);
+
+    aPath.writeToFile("ASydneyTempSol.png");
+    bfsPath.writeToFile("BFSSydneySol.png");
+
+
+
 }
 
 
