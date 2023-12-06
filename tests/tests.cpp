@@ -178,14 +178,14 @@ TEST_CASE("Sydney Correct Shortest Path from top left to bottom right", "[weight
     // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
     Grid aSearch;
-    aSearch.readFromFileCSV("../data/Sydney_0_1024.csv", 1);
+    aSearch.readFromCSV("../data/Sydney_0_1024.csv", 1);
     aSearch.createPointMaze(1024,1024);
     Point start = aSearch(0,0);
     Point end = aSearch(1024,1024);
 
 
     BFSgrid bfs;
-    bfs.readFromFileCSV("../data/Sydney_0_1024.csv", 1);
+    bfs.readFromCSV("../data/Sydney_0_1024.csv", 1);
     bfs.createPointMaze();
     
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
