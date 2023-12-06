@@ -175,7 +175,7 @@ cs225::PNG Grid::createPicture() {
     cs225::HSLAPixel black(0, 0, 0, 1);
     for (int row = 0; row < rows_; row++) {
         for (int col = 0; col < columns_; col++) {
-            if (pointmaze_[row][col].getWeight() == wallValue_) {
+            if (maze_[row][col] == wallValue_) {
                 picture_.getPixel(col, row) = black;
             } else {
                 picture_.getPixel(col, row) = white;

@@ -110,6 +110,7 @@ TEST_CASE("5x5 Correct Shortest Path from top left to bottom right", "[weight=10
 
     vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}, {2,3}, {3,3}, {3,4}, {4,4}};
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+    REQUIRE(solution.size() == shortestPath.size());
     for (size_t i = 0; i < solution.size(); i++) {
         REQUIRE(solution[i].first == shortestPath[i].first);
         REQUIRE(solution[i].second == shortestPath[i].second);
@@ -164,7 +165,6 @@ TEST_CASE("1000x1000 Correct Shortest Path from top left to bottom right", "[wei
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
 
     REQUIRE(solution.size() == shortestPath.size());
-    std::cout << solution.size() << " RERRRERERE " << shortestPath.size() << std::endl;
     for (size_t i = 0; i < solution.size(); i++) {
         REQUIRE(solution[i].first == shortestPath[i].first);
         REQUIRE(solution[i].second == shortestPath[i].second);
