@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <sstream>
 
-#include "HSLAPixel.h" 
+#include "../lib/cs225/HSLAPixel.h" 
 
 using namespace std;
 
@@ -173,8 +173,8 @@ cs225::PNG Grid::createPicture() {
     picture_ = cs225::PNG(columns_, rows_);
     cs225::HSLAPixel white(0, 0, 1, 1);
     cs225::HSLAPixel black(0, 0, 0, 1);
-    for (size_t row = 0; row < rows_; row++) {
-        for (size_t col = 0; col < columns_; col++) {
+    for (int row = 0; row < rows_; row++) {
+        for (int col = 0; col < columns_; col++) {
             if (pointmaze_[row][col].getWeight() == wallValue_) {
                 picture_.getPixel(col, row) = black;
             } else {
@@ -188,8 +188,9 @@ cs225::PNG Grid::createPicture() {
 
 cs225::PNG Grid::drawPath(const vector<pair<int,int>>& solutionPath) {
     cs225::PNG copy = picture_;
+    cs225::HSLAPixel red(0, 1, 0.5, 1);
     for (const pair<int,int>& tile : solutionPath) {
-        copy.getPixel(tile.second, tile.first);
+        copy.getPixel(tile.second, tile.first) = red;
     }
     return copy;
 }

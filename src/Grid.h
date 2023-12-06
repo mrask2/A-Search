@@ -9,7 +9,7 @@
 #include <unordered_map>
 
 #include "point.h"
-#include "PNG.h"
+#include "../lib/cs225/PNG.h"
 
 using namespace std;
 
