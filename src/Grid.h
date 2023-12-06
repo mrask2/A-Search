@@ -9,6 +9,7 @@
 #include <unordered_map>
 
 #include "point.h"
+#include "PNG.h"
 
 using namespace std;
 
@@ -23,6 +24,9 @@ class Grid {
 
         Point& operator()(int x, int y) { return pointmaze_[x][y]; }
 
+        cs225::PNG createPicture();
+        cs225::PNG drawPath(const vector<pair<int,int>>& solutionPath);
+
     private:
         vector<pair<int, int>> reconstruct_path(Point* current); 
         vector<Point*> getNeighbors(Point* current);
@@ -34,4 +38,5 @@ class Grid {
         int wallValue_;
 
         vector<pair<int, int>> path_;
+        cs225::PNG picture_;
 };

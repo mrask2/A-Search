@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <sstream>
 
+#include "HSLAPixel.h" 
+
 using namespace std;
 
 Grid::Grid() {
@@ -141,3 +143,27 @@ vector<Point*> Grid::getNeighbors(Point* current) {
     }
     return neighbors;
 } 
+
+
+cs225::PNG Grid::createPicture() {
+    picture_ = cs225::PNG(columns_, rows_);
+    cs225::HSLAPixel white(0, 0, 1, 1);
+    cs225::HSLAPixel black(0, 0, 0, 1);
+    for (size_t row = 0; row < rows_; row++) {
+        for (size_t col = 0; col < columns_; col++) {
+            if (pointmaze_[row][col].getWeight() == wallValue_) {
+                picture_.getPixel(col, row) = black;
+            } else {
+                picture_.getPixel(col, row) = white;
+            }
+        }
+    }
+}
+
+
+cs225::PNG Grid::drawPath(const vector<pair<int,int>>& solutionPath) {
+    cs225::PNG copy = picture_;
+    for (const pair<int,int>& tile : solutionPath) {
+        copy.getPixel(tile.second, tile.first);
+    }
+}
