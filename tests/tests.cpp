@@ -136,8 +136,18 @@ TEST_CASE("10x10 Correct Shortest Path from top left to bottom right", "[weight=
     bfs.readFromFile("../data/10x10.txt", 0);
     bfs.createPointMaze();
     
+    auto t1 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    auto t2 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+    auto t3 = std::chrono::high_resolution_clock::now();
+
+
+    auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+    auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
+    std::cout << "BFS 10x10 "<< ms_bfs.count() << " ms\n";
+    std::cout << "A* 10x10 "<< ms_astar.count() << " ms\n";
+
 
     REQUIRE(solution.size() == shortestPath.size());
 }
@@ -158,8 +168,17 @@ TEST_CASE("100x100 Correct Shortest Path from top left to bottom right", "[weigh
     bfs.readFromFile("../data/100x100.txt" , 0);
     bfs.createPointMaze();
     
+    auto t1 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    auto t2 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+    auto t3 = std::chrono::high_resolution_clock::now();
+
+    auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+    auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
+    std::cout << "BFS 100x100 "<< ms_bfs.count() << " ms\n";
+    std::cout << "A* 100x100 "<< ms_astar.count() << " ms\n";
+
 
     REQUIRE(solution.size() == shortestPath.size());
     for (size_t i = 0; i < solution.size(); i++) {
@@ -213,9 +232,9 @@ TEST_CASE("New York Correct Shortest Path from top left to bottom right", "[weig
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
     Grid aSearch;
     aSearch.readFromCSV("../data/NewYork_1_256.csv", 1);
-    aSearch.createPointMaze(1023,1023);
+    aSearch.createPointMaze(255,255);
     Point start = aSearch(0,0);
-    Point end = aSearch(1023,1023);
+    Point end = aSearch(255,255);
 
 
     BFSgrid bfs;
