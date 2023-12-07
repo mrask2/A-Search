@@ -9,4 +9,4 @@ lib - contains the PNG classes with functions we used to create images (part of 
 
 src - contains our code for creation and traversion of Grids and Points, as well as the implementation for the algorithm itself 
 
-
+tests - contain our test cases, as well as helper functions to test our code effectivley
