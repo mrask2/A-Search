@@ -1,1 +1,2 @@
-# A-Search
+### A* Search Algorithm
+#
