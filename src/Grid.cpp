@@ -76,9 +76,9 @@ int Grid::getHeuristic(int x, int y, int goalX, int goalY) {
 }
 
 struct ComparePoints {
-    bool operator()(Point const *& p1, Point const *& p2) {
+    bool operator()(Point* p1, Point* p2) {
         // return "true" if "p1" is ordered before "p2", for example:
-        return p1->getF() > p2->getF();
+        return p1->getH() < p2->getH();
     }
 };
 // A* finds a path from start to goal.
