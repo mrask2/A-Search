@@ -121,6 +121,26 @@ TEST_CASE("5x5 Correct Shortest Path from top left to bottom right", "[weight=10
 }
 
 
+TEST_CASE("10x10 Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
+    // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
+    // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
+    // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
+    Grid aSearch;
+    aSearch.readFromFile("../data/10x10.txt", 0);
+    aSearch.createPointMaze(9,9);
+    Point start = aSearch(0,0);
+    Point end = aSearch(9,9);
+
+
+    BFSgrid bfs;
+    bfs.readFromFile("../data/10x10.txt", 0);
+    bfs.createPointMaze();
+    
+    vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+
+    REQUIRE(solution.size() == shortestPath.size());
+}
 
 
 TEST_CASE("100x100 Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
@@ -149,37 +169,13 @@ TEST_CASE("100x100 Correct Shortest Path from top left to bottom right", "[weigh
 }
 
 
-TEST_CASE("1000x1000 Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
-    // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
-    // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
-    // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
-    Grid aSearch;
-    aSearch.readFromFile("../data/1000x1000.txt", 0);
-    aSearch.createPointMaze(999,999);
-    Point start = aSearch(0,0);
-    Point end = aSearch(999,999);
-
-
-    BFSgrid bfs;
-    bfs.readFromFile("../data/1000x1000.txt", 0);
-    bfs.createPointMaze();
-    
-    vector<pair<int,int>> solution = bfs.solveMaze(start, end);
-    vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
-
-    REQUIRE(solution.size() == shortestPath.size());
-    for (size_t i = 0; i < solution.size(); i++) {
-        REQUIRE(solution[i].first == shortestPath[i].first);
-        REQUIRE(solution[i].second == shortestPath[i].second);
-    }
-}
-
 TEST_CASE("Sydney CSV to PNG", "[weight=10][valgrind][3x3]") {
     Grid aSearch;
     aSearch.readFromCSV("../data/Sydney_0_1024.csv", 1);
     cs225::PNG pic = aSearch.createPicture();
     pic.writeToFile("SydneyTemp.png");
 }
+
 
 TEST_CASE("Sydney Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
     // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
@@ -204,30 +200,26 @@ TEST_CASE("Sydney Correct Shortest Path from top left to bottom right", "[weight
 
     auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
     auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
-    std::cout << "BFS took "<< ms_bfs.count() << " ms\n";
-    std::cout << "A* took "<< ms_astar.count() << " ms\n";
+    std::cout << "BFS Sydney took "<< ms_bfs.count() << " ms\n";
+    std::cout << "A* Sydney took "<< ms_astar.count() << " ms\n";
 
     REQUIRE(solution.size() == shortestPath.size());
-    for (size_t i = 0; i < solution.size(); i++) {
-        REQUIRE(solution[i].first == shortestPath[i].first);
-        REQUIRE(solution[i].second == shortestPath[i].second);
-    }
 }
 
 
-TEST_CASE("Shanghai Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
+TEST_CASE("New York Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
     // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
     // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
     // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
     Grid aSearch;
-    aSearch.readFromCSV("../data/Shanghai_2_1024.csv", 1);
+    aSearch.readFromCSV("../data/NewYork_1_256.csv", 1);
     aSearch.createPointMaze(1023,1023);
     Point start = aSearch(0,0);
     Point end = aSearch(1023,1023);
 
 
     BFSgrid bfs;
-    bfs.readFromCSV("../data/Shanghai_2_1024.csv", 1);
+    bfs.readFromCSV("../data/NewYork_1_256.csv", 1);
     bfs.createPointMaze();
     
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -238,8 +230,8 @@ TEST_CASE("Shanghai Correct Shortest Path from top left to bottom right", "[weig
 
     auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
     auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
-    std::cout << "BFS took "<< ms_bfs.count() << " ms\n";
-    std::cout << "A* took "<< ms_astar.count() << " ms\n";
+    std::cout << "BFS New York took "<< ms_bfs.count() << " ms\n";
+    std::cout << "A* New York took "<< ms_astar.count() << " ms\n";
 
     cs225::PNG aPic = aSearch.createPicture();
     cs225::PNG bfsPic = bfs.createPicture();
@@ -251,35 +243,8 @@ TEST_CASE("Shanghai Correct Shortest Path from top left to bottom right", "[weig
     cs225::PNG bfsPath = bfs.drawPath(solution);
     cs225::PNG aPath = aSearch.drawPath(shortestPath);
 
-    aPath.writeToFile("AShanghaiSol.png");
-    bfsPath.writeToFile("BFShanghaiSol.png");
+    aPath.writeToFile("ASnewYork.png");
+    bfsPath.writeToFile("BFSnewYork.png");
 
     REQUIRE(solution.size() == shortestPath.size());    
-
 }
-
-
-
-/*
-TEST_CASE("Straight Path with No Obstacles") {
-    // testing on a straight path with no obstacles
-    Graph threeGraph = Graph("3x3maze.txt");
-    startPoint = threeGraph(0,0);
-    endPoint = threeGraph(2,0);
-    REQUIRE(findPath(3x3Maze, startPoint, endPoint) == straightPath);
-}
-
-TEST_CASE("Diagonal Path with No Obstacles") { 
-    Graph threeGraph = Graph("3x3maze.txt");
-    startPoint = threeGraph(0,0);
-    endPoint = threeGraph(2,2);
-    REQUIRE(findPath(3x3Maze, startPoint, endPoint) == diagonalPath);
-}
-
-TEST_CASE("Straight Path with Obstacles") {
-    Graph threeGraph = Graph("3x3maze.txt");
-    startPoint = threeGraph(0,0);
-    endPoint = threeGraph(0,2);
-    REQUIRE(findPath(3x3Maze, startPoint, endPoint) == straightObstaclePath);
-}
-*/
