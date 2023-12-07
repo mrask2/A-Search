@@ -230,25 +230,31 @@ TEST_CASE("Shanghai Correct Shortest Path from top left to bottom right", "[weig
     bfs.readFromCSV("../data/Shanghai_2_1024.csv", 1);
     bfs.createPointMaze();
     
+    auto t1 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    auto t2 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+    auto t3 = std::chrono::high_resolution_clock::now();
 
-    REQUIRE(solution.size() == shortestPath.size());
+    auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+    auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
+    std::cout << "BFS took "<< ms_bfs.count() << " ms\n";
+    std::cout << "A* took "<< ms_astar.count() << " ms\n";
 
     cs225::PNG aPic = aSearch.createPicture();
     cs225::PNG bfsPic = bfs.createPicture();
 
 
-    aPic.writeToFile("ASydneyTemp.png");
-    bfsPic.writeToFile("BFSSydneyTemp.png");
+    // aPic.writeToFile("AShaghaiTemp.png");
+    // bfsPic.writeToFile("BFShangaiTemp.png");
     
     cs225::PNG bfsPath = bfs.drawPath(solution);
     cs225::PNG aPath = aSearch.drawPath(shortestPath);
 
-    aPath.writeToFile("ASydneyTempSol.png");
-    bfsPath.writeToFile("BFSSydneySol.png");
+    aPath.writeToFile("AShanghaiSol.png");
+    bfsPath.writeToFile("BFShanghaiSol.png");
 
-
+    REQUIRE(solution.size() == shortestPath.size());    
 
 }
 
