@@ -10,3 +10,6 @@ lib - contains the PNG classes with functions we used to create images (part of 
 src - contains our code for creation and traversion of Grids and Points, as well as the implementation for the algorithm itself 
 
 tests - contain our test cases, as well as helper functions to test our code effectivley
+
+## Running Instructions
+cd into the repositoriy, run command mkdir build. cd into build, run command make. Given a csv or txt file of two numbers, one number representing a wall and the other a passable tile, create a new Grid variable. Then, readFromCSV to that variable the file you want to create a grid from. CreatePoint
