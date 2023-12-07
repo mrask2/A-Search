@@ -75,7 +75,12 @@ int Grid::getHeuristic(int x, int y, int goalX, int goalY) {
     return std::abs(goalX - x + goalY - y);
 }
 
-
+struct ComparePoints {
+    bool operator()(Point const & p1, Point const & p2) {
+        // return "true" if "p1" is ordered before "p2", for example:
+        return p1.getH() > p2.getH();
+    }
+};
 // A* finds a path from start to goal.
 // h is the heuristic function. h(n) estimates the cost to reach goal from node n.
 vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
@@ -83,10 +88,10 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
     // https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
 
     // The set of discovered nodes that may need to be (re-)expanded.
-    priority_queue<Point*, vector<Point*>, greater<Point*>> openSet;
-    openSet.push(&start);
+    priority_queue<Point, vector<Point>, ComparePoints> openSet;
+    openSet.push(start);
 
-    // For node n, n.getCameFrom() is the Point* immediately preceding 
+    // For node n, n.getCameFrom() is the Point& immediately preceding 
     // it on the cheapest path from the start to n currently known.
 
     // For node n, n.setG() is the cost of the cheapest path from start to n currently known.
@@ -98,7 +103,8 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
 
     while (!openSet.empty()) {
         // This operation can occur in O(Log(N)) time if openSet is a min-heap or a priority queue
-        Point* current = openSet.top(); // the node in openSet having the lowest f value
+        std::pair<int, int> curr_coord = openSet.top().getXY(); // the node in openSet having the lowest f value
+        Point* current = &pointmaze_[curr_coord.first][curr_coord.second];
         openSet.pop();
         if (current->searched) {
             continue;
@@ -120,7 +126,7 @@ vector<std::pair<int,int>> Grid::solveMaze(Point start, Point goal) {
                 neighbor->setCameFrom(current); 
                 neighbor->setG(tentative_gScore);
                 if (!neighbor->searched) {
-                    openSet.push(neighbor);
+                    openSet.push(*neighbor);
                 }
             }
         }

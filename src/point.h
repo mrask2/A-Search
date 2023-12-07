@@ -19,12 +19,6 @@ class Point {
         int getG() const { return g_; }
         int getH() const { return h_; }
 
-        bool operator<(const Point& rhs) const {
-            return f_ < rhs.f_;
-        }
-        bool operator>(const Point& rhs) const {
-            return f_ > rhs.f_;
-        }
         bool positionEquals(const Point& rhs) const {
             return x_ == rhs.x_ && y_ == rhs.y_;
         }

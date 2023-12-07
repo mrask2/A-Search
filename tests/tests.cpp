@@ -1,6 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 #include "Grid.h"
 #include "BFSgrid.h"
+
+#include <chrono>
+
 TEST_CASE("3x3 Correct Shortest Path from top left to bottom right", "[weight=10][valgrind][3x3]") {
     // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
     // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
@@ -192,9 +195,17 @@ TEST_CASE("Sydney Correct Shortest Path from top left to bottom right", "[weight
     BFSgrid bfs;
     bfs.readFromCSV("../data/Sydney_0_1024.csv", 1);
     bfs.createPointMaze();
-    
+
+    auto t1 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> solution = bfs.solveMaze(start, end);
+    auto t2 = std::chrono::high_resolution_clock::now();
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
+    auto t3 = std::chrono::high_resolution_clock::now();
+
+    auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+    auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
+    std::cout << "BFS took "<< ms_bfs.count() << " ms\n";
+    std::cout << "A* took "<< ms_astar.count() << " ms\n";
 
     REQUIRE(solution.size() == shortestPath.size());
     for (size_t i = 0; i < solution.size(); i++) {
