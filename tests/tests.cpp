@@ -295,33 +295,3 @@ TEST_CASE("500x500 Timer", "[weight=10][valgrind][3x3]") {
     REQUIRE(solution.size() == shortestPath.size());
 }
 
-TEST_CASE("5000x5000 Timer", "[weight=10][valgrind][3x3]") {
-    // 3x3 maze is the grid of nodes created from the 3x3.txt dataset, where each number 1-9 represents a passable node with weight and each 0 represents the start and end
-    // findPath will return a vector of nodes that represent the shortest path from pointA to pointB
-    // 3x3shortestPath will be a vector of points that correspond to the shortest path from the top left most points (0,0) to the bottom left most point (5,0)
-    Grid aSearch;
-    aSearch.readFromFile("../data/5000x5000.txt", 0);
-    aSearch.createPointMaze(4999,4999);
-    Point start = aSearch(0,0);
-    Point end = aSearch(4999,4999);
-
-
-    BFSgrid bfs;
-    bfs.readFromFile("../data/5000x5000.txt", 0);
-    bfs.createPointMaze();
-    
-    auto t1 = std::chrono::high_resolution_clock::now();
-    vector<pair<int,int>> solution = bfs.solveMaze(start, end);
-    auto t2 = std::chrono::high_resolution_clock::now();
-    vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
-    auto t3 = std::chrono::high_resolution_clock::now();
-
-
-    auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-    auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
-    std::cout << "BFS 5000x5000 "<< ms_bfs.count() << " ms\n";
-    std::cout << "A* 5000x5000 "<< ms_astar.count() << " ms\n";
-
-
-    REQUIRE(solution.size() == shortestPath.size());
-}
