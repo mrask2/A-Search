@@ -111,7 +111,7 @@ TEST_CASE("5x5 Correct Shortest Path from top left to bottom right", "[weight=10
     Point start = aSearch(0,0);
     Point end = aSearch(4,4);
 
-    vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}, {2,3}, {3,3}, {3,4}, {4,4}};
+    vector<pair<int,int>> solution = {{0,0}, {0,1}, {1,1}, {1,2}, {2,2}, {3,2}, {3,3}, {3,4}, {4,4}};
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
     REQUIRE(solution.size() == shortestPath.size());
 }
@@ -139,10 +139,10 @@ TEST_CASE("10x10 Correct Shortest Path from top left to bottom right", "[weight=
     auto t3 = std::chrono::high_resolution_clock::now();
 
 
-    auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-    auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
-    std::cout << "BFS 10x10 "<< ms_bfs.count() << " ms\n";
-    std::cout << "A* 10x10 "<< ms_astar.count() << " ms\n";
+    auto ms_bfs = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    auto ms_astar = std::chrono::duration_cast<std::chrono::microseconds>(t3 - t2);
+    std::cout << "BFS 10x10 "<< ms_bfs.count() << " microseconds\n";
+    std::cout << "A* 10x10 "<< ms_astar.count() << " microseconds\n";
 
 
     REQUIRE(solution.size() == shortestPath.size());
@@ -170,10 +170,10 @@ TEST_CASE("100x100 Correct Shortest Path from top left to bottom right", "[weigh
     vector<pair<int,int>> shortestPath = aSearch.solveMaze(start, end);
     auto t3 = std::chrono::high_resolution_clock::now();
 
-    auto ms_bfs = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-    auto ms_astar = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2);
-    std::cout << "BFS 100x100 "<< ms_bfs.count() << " ms\n";
-    std::cout << "A* 100x100 "<< ms_astar.count() << " ms\n";
+    auto ms_bfs = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    auto ms_astar = std::chrono::duration_cast<std::chrono::microseconds>(t3 - t2);
+    std::cout << "BFS 100x100 "<< ms_bfs.count() << " microseconds\n";
+    std::cout << "A* 100x100 "<< ms_astar.count() << " microseconds\n";
 
 
     REQUIRE(solution.size() == shortestPath.size());
